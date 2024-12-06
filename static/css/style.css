@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start; /* Align content at the top */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-image: url("/static/images/bgg1.jpeg");
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+}
+
+.main {
+    display: flex;
+    justify-content: flex-start; /* Align contents to the top */
+    align-items: center; /* Keep horizontal centering */
+    flex-direction: column;
+    padding: 50px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%; /* Full width */
+    flex-grow: 1; /* Allow the background to cover more content if needed */
+}
+
+
+h1 {
+    font-size: 50px;
+}
+
+.search {
+    --input-line: #cccccc;
+    --input-text-color: #808080;
+    --input-text-hover-color: transparent;
+    --input-border-color: #808080;
+    --input-border-hover-color: #999999;
+    --input-bg-color: #333333;
+    --search-max-width: 450px;
+    --search-min-width: 350px;
+    --border-radius: 5px;
+    --transition-cubic-bezier: 150ms cubic-bezier(0.4,0,0.2,1);
+    margin: 50px;
+}
+.get-instructions {
+    background-color: #28a745; /* Change this to your desired background color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Top/Bottom and Left/Right padding */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+.get-instructions:hover {
+    background-color: #218838; /* Darker shade for hover effect */
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+
+.search-box {
+    max-width: var(--search-max-width);
+    min-width: var(--search-min-width);
+    height: 35px;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--border-radius);
+    padding: 5px 15px;
+    background: var(--input-bg-color);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: var(--transition-cubic-bezier);
+}
+
+.search-box:hover {
+    border-color: var(--input-border-hover-color);
+}
+
+.search-field {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: -5px;
+    border: 0;
+}
+
+.input {
+    width: calc(100% - 29px);
+    height: 100%;
+    border: 0;
+    border-color: transparent;
+    font-size: 1rem;
+    padding-right: 0px;
+    color: var(--input-line);
+    background: var(--input-bg-color);
+    border-right: 2px solid var(--input-border-color);
+    outline: none;
+}
+
+.input::-webkit-input-placeholder {
+    color: var(--input-text-color);
+}
+
+.input::-moz-input-placeholder {
+color: var(--input-text-color);
+}
+
+.input::-ms-input-placeholder {
+    color: var(--input-text-color);
+}
+
+.input:focus::-webkit-input-placeholder {
+    color: var(--input-text-hover-color);
+}
+
+.input:focus::-moz-input-placeholder {
+    color: var(--input-text-hover-color);
+}
+
+.input:focus::-ms-input-placeholder {
+    color: var(--input-text-hover-color);
+}
+
+.search-box-icon {
+    width: 52px;
+    height: 35px;
+    position: absolute;
+    top: -1px;
+    right: -21px;
+    background: transparent;
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    transition: var(--transition-cubic-bezier);
+}
+
+.search-box-icon:hover {
+    background: var(--input-border-color);
+}
+
+.btn-icon-content {
+    width: 52px;
+    height: 35px;
+    top: -6px;
+    right: -21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    transition: var(--transition-cubic-bezier);
+    opacity: .4;
+}
+
+.btn-icon-content:hover {
+    opacity: .8;
+}
+
+.search-icon {
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    top: 7px;
+    right: 15px;
+}
+
+/* Style specifically for the Pantry button */
+.pantry-button {
+    background-color: #ff7f50;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pantry-button:hover {
+    background-color: #ff6347;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pantry-button:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px 2px rgba(255, 127, 80, 0.6);
+}
+
+.pantry-button:active {
+    background-color: #ff4500;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: scale(0.98);
+}
+
+nav {
+    position: absolute;
+    top: 0;
+    right: 20px; /* Slightly move the navbar to the left */
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+/* Hover effect for the navigation links */
+nav ul li a:hover {
+    color: orange; /* Change text color to orange on hover */
+}
+
+#results {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 1; /* Ensure this part grows to fill available space */
+}
+
+#results li {
+    list-style: none;
+    margin: 10px;
+    width: 350px;
+}

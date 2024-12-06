@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Instructions</title>
+    <!-- recipe.html -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe.css') }}">
+
+</head>
+<body>
+    <div class="recipe-details">
+        <img id="recipeImage" alt="Recipe Image">
+        <h1 id="recipeLabel"></h1>
+        <h2>Ingredients</h2>
+        <ul id="recipeIngredients"></ul>
+
+        <h2>Directions</h2>
+        <ol id="recipeInstructions"></ol>  <!-- Ordered list for step-by-step directions -->
+    </div>
+
+    <script>
+        // Retrieve stored recipe data from sessionStorage
+        const recipeImage = sessionStorage.getItem('recipeImage') || 'default-image.jpg';  // Fallback to default image if missing
+        const recipeLabel = sessionStorage.getItem('recipeLabel') || 'Recipe Name Unavailable';
+        const recipeIngredients = JSON.parse(sessionStorage.getItem('recipeIngredients')) || ['Ingredients not available.'];
+
+        // Check if 'recipeInstructions' exists, else provide a fallback message
+        let recipeInstructions = sessionStorage.getItem('recipeInstructions');
+        recipeInstructions = recipeInstructions ? JSON.parse(recipeInstructions) : ['Instructions not available.'];
+
+        // Display the recipe details
+        document.getElementById('recipeImage').src = recipeImage;
+        document.getElementById('recipeLabel').textContent = recipeLabel;
+        
+        // Display the ingredients
+        const ingredientsList = document.getElementById('recipeIngredients');
+        recipeIngredients.forEach(ingredient => {
+            const li = document.createElement('li');
+            li.textContent = ingredient;
+            ingredientsList.appendChild(li);
+        });
+
+        // Display the instructions or the fallback message
+        const instructionsList = document.getElementById('recipeInstructions');
+        recipeInstructions.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            instructionsList.appendChild(li);
+        });
+    </script>
+</body>
+</html>

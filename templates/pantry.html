@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Finder</title>
+  
+  <!-- Include Tagify CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.12.0/tagify.css" rel="stylesheet">
+  
+  <style>
+    body {
+  font-family: 'Poppins', sans-serif;
+  background: url('/static/images/pantry_img.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 auto 40px;
+  padding: 20px 40px; /* Adds space inside the box */
+  background-color: #37678a; /* Background color for the box */
+  border: 2px solid #070707; /* Border around the box */
+  border-radius: 10px; /* Rounded corners */
+  display: inline-block; /* Centers the box with the text */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  left: 450px; /* Optional shadow for a 3D effect */
+}
+
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  font-size: 1.2em;
+  color: #495057;
+}
+
+input, select, button {
+  font-size: 1em;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  max-width: 400px;
+}
+
+input:focus, select:focus, button:focus {
+  outline: none;
+  border-color: #2b6777;
+}
+
+button {
+  background-color: #2b6777;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1d4f5f;
+}
+
+#recipeResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.recipe-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 30%;  /* Adjust this to fit three items in a row */
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.recipe-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.recipe-card img:hover {
+  transform: scale(1.05);
+}
+
+.recipe-card h3 {
+  font-size: 1.3em;
+  color: #2b6777;
+}
+
+.recipe-card p {
+  font-size: 1em;
+  color: #6c757d;
+}
+
+.recipe-card a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.recipe-card a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .recipe-card {
+    width: 45%;  /* Two cards per row on medium-sized screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .recipe-card {
+    width: 100%;  /* One card per row on small screens */
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <h1>Pantry Mode - Dietary Preferences</h1>
+
+  <form id="ingredientForm">
+    <label for="ingredients">Select ingredients:</label>
+    <input name="ingredients" id="ingredientsInput" placeholder="Type to search ingredients">
+
+    <label for="diet">Select dietary preference:</label>
+    <select id="diet">
+      <option value="">Any</option>
+      <option value="vegetarian">Vegetarian</option>
+      <option value="vegan">Vegan</option>
+      <option value="pescatarian">pescatarian</option>
+      <option value="Keto">Keto</option>
+    </select>
+
+    <button type="submit">Find Recipes</button>
+  </form>
+
+  <!-- Section to display recipe results -->
+  <div id="recipeResults"></div>
+
+  <!-- Include Tagify JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.12.0/tagify.min.js"></script>
+  
+  <script>
+    // Initialize Tagify on the input field
+    var input = document.querySelector('input[name=ingredients]');
+    var tagify = new Tagify(input, {
+      whitelist: [],  // Ingredients will be fetched from the API
+      maxTags: 10,
+      dropdown: {
+        enabled: 0,  // Show the dropdown on focus
+        maxItems: 20,  // Limit the number of suggestions displayed
+      }
+    });
+
+    // Fetch available ingredients from backend and update Tagify whitelist
+    fetch('/get_ingredients')
+      .then(response => response.json())
+      .then(data => {
+        tagify.settings.whitelist = data.ingredients;  // Update dropdown with ingredients from the API
+      });
+
+    // Handle form submission to get recipes based on selected ingredients and diet
+    document.getElementById('ingredientForm').onsubmit = async function(e) {
+      e.preventDefault();  // Prevent page refresh
+      
+      const ingredients = tagify.value.map(tag => tag.value);  // Get selected ingredients
+      const diet = document.getElementById('diet').value;  // Get selected dietary preference
+      
+      const response = await fetch('/get_recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ingredients, diet })
+      });
+
+      const recipes = await response.json();  // Get the recipe results
+      displayRecipes(recipes);
+    };
+
+    // Function to display recipe results
+    function displayRecipes(recipes) {
+      const resultsDiv = document.getElementById('recipeResults');
+      resultsDiv.innerHTML = '';  // Clear previous results
+
+      // Check if 'recipes.hits' exists and has data
+      if (recipes.hits && recipes.hits.length > 0) {
+        recipes.hits.forEach(recipe => {
+          const recipeDiv = document.createElement('div');
+          recipeDiv.classList.add('recipe-card');  // Add the class for styling
+          recipeDiv.innerHTML = `
+            <h3>${recipe.recipe.label}</h3>
+            <img src="${recipe.recipe.image}" alt="${recipe.recipe.label}">
+            <p><a href="${recipe.recipe.url}" target="_blank">View Recipe</a></p>
+          `;
+          resultsDiv.appendChild(recipeDiv);
+        });
+      } else {
+        // Show a message if no recipes are found
+        resultsDiv.innerHTML = '<p>No recipes found with these ingredients.</p>';
+      }
+    }
+
+  </script>
+
+</body>
+</html>

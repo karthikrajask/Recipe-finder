@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recipe Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/pantry">Pantry</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </nav>
+     
+    <div class="main">
+        <h1>FlavorQuest</h1>
+        <p style="font-family: 'Matt Cameron', sans-serif; font-size: 16px; color: whitesmoke">
+            "Your Ultimate Recipe Navigator"
+        </p>
+        
+        <!-- History Icon at the Top Right -->
+        <div style="position: absolute; top: 10px; right: 10px;">
+            <button onclick="window.location.href='/history'" title="View History" style="background: none; border: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <path d="M13 3a9 9 0 1 1-9 9H2a11 11 0 1 0 11-11v2zM11 6h2v6l4.3 4.3-1.4 1.4L11 13V6z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <button class="pantry-button" onclick="window.location.href='/pantry'">Pantry</button>
+        <div class="search">
+            <div class="search-box">
+                <div class="search-field">
+                    <input placeholder="Search food or ingredients..." class="input" type="text" id="searchInput">
+                    <div class="search-box-icon">
+                        <button class="btn-icon-content" id="searchButton">
+                            <i class="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 512 512">
+                                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" fill="#fff"></path>
+                                </svg>
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="message" style="color: red; font-size: 16px; margin-top: 10px;"></div>
+
+        <div class="recipe-result">
+            <ul id="results"></ul>
+        </div>
+    </div>
+</body>
+</html>

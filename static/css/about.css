@@ -1,0 +1,39 @@
+/* static/css/about.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/static/images/bg3.jpeg'); /* Change this to the path of your image */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.about-container {
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h1 {
+    color: #2a9d8f;
+}
+
+p {
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.team-section h2 {
+    margin-top: 20px;
+    color: #2a9d8f;
+}
